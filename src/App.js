@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+class App extends React.Component {
+  constructor() {
+    super()
+
+    this.state={
+      item: '',
+      items: []
+    }
+
+    this.handleInputChange =this.handleInputChange.bind(this);
+    this.submitItem =this.submitItem.bind(this);
+
+  }
+
+  handleInputChange(event){
+    let name = event.target.name;
+    let value = event.target.value;
+
+    this.setState({ [name]: value })
+  }
+
+  submitItem() {
+    let items = this.state.items;
+    let item = this.state.item;
+    items.push(item);
+    this.setState({ items })
+  }
+
+  render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>TODO List App</h1>
+      <input
+        type="text"
+        name="item"
+        onChange={this.handleInputChange}
+        />
+        <button
+          onClick={this.submitItem}
+        >Submit item</button>
+        
+        {this.state.items.map((item) => {
+          return (
+            <p>{item}</p>
+          )
+        })}
     </div>
-  );
+    );
+  }
 }
 
 export default App;
